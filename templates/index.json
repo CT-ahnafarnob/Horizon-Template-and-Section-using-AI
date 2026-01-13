@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -61,6 +62,7 @@
       "settings": {
         "media_type_1": "image",
         "media_type_2": "image",
+        "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -277,10 +279,32 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "ct_image_with_text_DhAhr9": {
+      "type": "CT-Image-with-text",
+      "name": "CT Image with Text",
+      "settings": {
+        "layout": "text_first",
+        "image": "shopify://shop_images/3rd-grid.png",
+        "heading": "Hey This is a section made by AI",
+        "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post.</p>",
+        "button_label": "Button",
+        "button_link": "",
+        "button_alignment": "left",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "heading_font": "work_sans_n6",
+        "heading_size": 40,
+        "text_font": "work_sans_n4",
+        "text_size": 16
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "ct_image_with_text_DhAhr9"
   ]
 }
