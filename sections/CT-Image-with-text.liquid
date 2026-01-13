@@ -13,6 +13,8 @@
     --text-font-style: {{ section.settings.text_font.style }};
     --heading-size: {{ section.settings.heading_size }}px;
     --text-size: {{ section.settings.text_size }}px;
+    --button-bg-color: {{ section.settings.button_bg_color }};
+    --button-text-color: {{ section.settings.button_text_color }};
 
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -73,6 +75,19 @@
   .ct-image-with-text__text p {
     margin: 0;
   }
+
+  .ct-image-with-text__button {
+    margin-top: 1.5rem;
+    display: inline-block;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: 1px solid var(--button-bg-color);
+  }
+  
+  .ct-image-with-text__button:hover {
+    background-color: transparent;
+    color: var(--button-bg-color);
+  }
   
   @media screen and (max-width: 768px) {
     .ct-image-with-text,
@@ -100,6 +115,13 @@
     {%- endif -%}
     {%- if section.settings.text != blank -%}
       <div class="ct-image-with-text__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <div style="text-align: {{ section.settings.button_alignment }};">
+        <a href="{{ section.settings.button_link | default: '#' }}" class="button ct-image-with-text__button">
+          {{ section.settings.button_label | escape }}
+        </a>
+      </div>
     {%- endif -%}
   </div>
 </div>
@@ -151,6 +173,49 @@
       "id": "text",
       "label": "Text",
       "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
     },
     {
       "type": "header",
