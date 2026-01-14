@@ -33,10 +33,17 @@
     {% endif %}
 
     {{ content_for_header }}
+
+
+    
+{% if template == 'product.custom-product-template' %}
+  {{ 'product-custom.css' | asset_url | stylesheet_tag }}
+{% endif %}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
-    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+  {% comment %} <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}"> {% endcomment %}
+  <body class="template-{{ template | handleize }} page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}"> 
+  {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
     </div>

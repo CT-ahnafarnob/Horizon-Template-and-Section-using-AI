@@ -1,0 +1,192 @@
+/* ============================================
+   Custom Product Template Styles
+   Template: product.custom-product-template
+   Works WITH the native grid system
+   ============================================ */
+
+/* ============================================
+   LAYOUT: Work with native grid, not against it
+   ============================================ */
+
+/* Force equal columns layout (50/50 split) */
+body.template-product-custom-product-template .product-information__grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 60px !important;
+    display: grid !important;
+}
+
+/* Image Gallery - Let grid handle it naturally */
+body.template-product-custom-product-template .product-information__media {
+    grid-column: 1;
+    width: 100%;
+}
+
+/* Product Details - Full width of grid column */
+body.template-product-custom-product-template .product-details {
+    grid-column: 2;
+    width: 100%;
+    max-width: 100%;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+}
+
+/* ============================================
+   SPACING: Clean, breathable spacing
+   ============================================ */
+
+body.template-product-custom-product-template [data-block-type="_product-details"] {
+    display: flex;
+    flex-direction: column;
+    gap: 20px !important;
+}
+
+/* Product title */
+body.template-product-custom-product-template [data-block-type="text"] h1,
+body.template-product-custom-product-template .product-details h1 {
+    margin: 0 !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+}
+
+/* Star rating */
+body.template-product-custom-product-template [data-block-type="rating"] {
+    margin: 0 !important;
+}
+
+/* Price */
+body.template-product-custom-product-template [data-block-type="price"] {
+    margin: 0 !important;
+}
+
+body.template-product-custom-product-template [data-block-type="price"] .price {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+/* Description/shipping text */
+body.template-product-custom-product-template [data-block-type="text"] p {
+    margin: 0 !important;
+    line-height: 1.6 !important;
+    font-size: 14px !important;
+    color: #666 !important;
+}
+
+/* ============================================
+   QUANTITY SELECTOR
+   ============================================ */
+
+body.template-product-custom-product-template [data-block-type="quantity"] {
+    margin: 0 !important;
+}
+
+body.template-product-custom-product-template [data-block-type="quantity"] .quantity {
+    max-width: 140px !important;
+}
+
+/* ============================================
+   BUTTON STYLING: Match reference design exactly
+   ============================================ */
+
+/* Buy buttons container */
+body.template-product-custom-product-template [data-block-type="buy-buttons"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 0 !important;
+}
+
+/* Add to Cart Button - WHITE with BLACK BORDER */
+body.template-product-custom-product-template [data-block-type="add-to-cart"] button,
+body.template-product-custom-product-template [data-block-type="add-to-cart"] .button,
+body.template-product-custom-product-template .add-to-cart-button,
+body.template-product-custom-product-template .add-to-cart-button.button,
+body.template-product-custom-product-template [data-type="add-to-cart-form"] button[type="submit"],
+body.template-product-custom-product-template button.add-to-cart-button,
+body.template-product-custom-product-template .button--primary {
+    width: 100% !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1px solid #000000 !important;
+    border-color: #000000 !important;
+    color: #000000 !important;
+    padding: 16px 24px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+body.template-product-custom-product-template [data-block-type="add-to-cart"] button:hover,
+body.template-product-custom-product-template [data-block-type="add-to-cart"] .button:hover,
+body.template-product-custom-product-template .add-to-cart-button:hover,
+body.template-product-custom-product-template .button--primary:hover {
+    background: #f8f8f8 !important;
+    background-color: #f8f8f8 !important;
+}
+
+/* Buy with Shop Button - PURPLE SOLID */
+body.template-product-custom-product-template [data-block-type="accelerated-checkout"] button,
+body.template-product-custom-product-template [data-block-type="accelerated-checkout"] .shopify-payment-button__button,
+body.template-product-custom-product-template .shopify-payment-button__button--unbranded {
+    width: 100% !important;
+    background: #5a31f4 !important;
+    background-color: #5a31f4 !important;
+    border: none !important;
+    color: #ffffff !important;
+    padding: 16px 24px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+}
+
+body.template-product-custom-product-template [data-block-type="accelerated-checkout"] button:hover,
+body.template-product-custom-product-template .shopify-payment-button__button:hover {
+    background: #4a28d4 !important;
+}
+
+/* More payment options */
+body.template-product-custom-product-template .shopify-payment-button__more-options {
+    margin-top: 12px !important;
+    text-align: center !important;
+    font-size: 13px !important;
+}
+
+body.template-product-custom-product-template .group-block-content {
+    margin: auto !important;
+    width: 90%
+}
+
+/* ============================================
+   RESPONSIVE: Mobile and Tablet
+   ============================================ */
+
+@media screen and (max-width: 749px) {
+
+    /* Stack vertically on mobile */
+    body.template-product-custom-product-template .product-information__grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    body.template-product-custom-product-template .product-information__media,
+    body.template-product-custom-product-template .product-details {
+        grid-column: 1 !important;
+        position: relative !important;
+        top: auto !important;
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+
+    /* Tablet: Equal 50/50 split */
+    body.template-product-custom-product-template .product-information__grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 40px !important;
+    }
+}

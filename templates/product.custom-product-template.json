@@ -405,10 +405,26 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "ct_image_with_text": {
+      "type": "CT-Image-with-text",
+      "settings": {
+        "layout": "image_first",
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "heading": "Experience the Difference",
+        "text": "<p>Discover the quality and craftsmanship that goes into every product. Our commitment to excellence ensures you get the best.</p>",
+        "button_label": "Learn More",
+        "button_link": "shopify:\/\/collections\/all",
+        "button_alignment": "left",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff"
+      }
     }
   },
   "order": [
     "main",
+    "ct_image_with_text",
     "product_recommendations_qggXJq"
   ]
 }
