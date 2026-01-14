@@ -71,6 +71,7 @@
               "type": "group",
               "name": "Header",
               "settings": {
+                "link": "",
                 "open_in_new_tab": false,
                 "content_direction": "column",
                 "vertical_on_mobile": true,
@@ -95,6 +96,7 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
+                "placeholder": "",
                 "toggle_overlay": false,
                 "overlay_color": "#00000026",
                 "overlay_style": "solid",
@@ -189,6 +191,7 @@
               "settings": {
                 "stacking": true,
                 "show_pickup_availability": false,
+                "gift_card_form": true,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -405,26 +408,10 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "ct_image_with_text": {
-      "type": "CT-Image-with-text",
-      "settings": {
-        "layout": "image_first",
-        "bg_color": "#ffffff",
-        "text_color": "#000000",
-        "heading": "Experience the Difference",
-        "text": "<p>Discover the quality and craftsmanship that goes into every product. Our commitment to excellence ensures you get the best.</p>",
-        "button_label": "Learn More",
-        "button_link": "shopify:\/\/collections\/all",
-        "button_alignment": "left",
-        "button_bg_color": "#000000",
-        "button_text_color": "#ffffff"
-      }
     }
   },
   "order": [
     "main",
-    "ct_image_with_text",
     "product_recommendations_qggXJq"
   ]
 }
