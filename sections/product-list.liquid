@@ -6,7 +6,6 @@
 <!-- Prepare products data for filter component - FRESH DATA -->
 <script>
   // Force fresh data - clear any cache
-  // Force fresh data - clear any cache
   {% assign safe_id = section.id | replace: "-", "_" %}
   const allProductsData_{{ safe_id }} = [
     {% if section.settings.collection %}
