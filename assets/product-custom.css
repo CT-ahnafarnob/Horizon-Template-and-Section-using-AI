@@ -48,6 +48,7 @@ body.template-product-custom-product-template .product-details h1 {
     font-size: 32px !important;
     font-weight: 700 !important;
     line-height: 1.2 !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 /* Star rating */
@@ -58,6 +59,8 @@ body.template-product-custom-product-template [data-block-type="rating"] {
 /* Price */
 body.template-product-custom-product-template [data-block-type="price"] {
     margin: 0 !important;
+    font-weight: 600 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body.template-product-custom-product-template [data-block-type="price"] .price {
