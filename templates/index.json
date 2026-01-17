@@ -173,7 +173,7 @@
       "name": "Featured collection",
       "settings": {
         "collection": "all-products",
-        "max_products": 8,
+        "max_products": 27,
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
         "gap": 28,
@@ -203,7 +203,7 @@
         "text_size": 16
       }
     },
-    "product_list_EJhnRN": {
+    "product_list_93UiKb": {
       "type": "product-list",
       "blocks": {
         "static-header": {
@@ -211,7 +211,7 @@
           "static": true,
           "settings": {
             "content_direction": "row",
-            "vertical_on_mobile": false,
+            "vertical_on_mobile": true,
             "horizontal_alignment": "space-between",
             "vertical_alignment": "flex-end",
             "align_baseline": false,
@@ -239,7 +239,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "product_list_text_rfapnz": {
+            "product_list_text_Lf8nK6": {
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
@@ -247,7 +247,7 @@
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h4",
+                "type_preset": "rte",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -265,7 +265,7 @@
               },
               "blocks": {}
             },
-            "product_list_button_UUFc6M": {
+            "product_list_button_3bKnxD": {
               "type": "_product-list-button",
               "name": "t:names.product_list_button",
               "settings": {
@@ -281,15 +281,15 @@
             }
           },
           "block_order": [
-            "product_list_text_rfapnz",
-            "product_list_button_UUFc6M"
+            "product_list_text_Lf8nK6",
+            "product_list_button_3bKnxD"
           ]
         }
       },
       "name": "t:names.products_grid",
       "settings": {
         "collection": "all-products",
-        "max_products": 12,
+        "max_products": 1,
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
         "gap": 12,
@@ -303,6 +303,6 @@
     "hero_jVaWmY",
     "product_list_fa6P9H",
     "ct_image_with_text_DhAhr9",
-    "product_list_EJhnRN"
+    "product_list_93UiKb"
   ]
 }
