@@ -173,7 +173,7 @@
       "name": "Featured collection",
       "settings": {
         "collection": "all-products",
-        "max_products": 27,
+        "max_products": 1,
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
         "gap": 28,
