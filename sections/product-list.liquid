@@ -6,42 +6,45 @@
 <!-- Prepare products data for filter component - FRESH DATA -->
 <script>
   // Force fresh data - clear any cache
-  const allProductsData = [
+  // Force fresh data - clear any cache
+  {% assign safe_id = section.id | replace: "-", "_" %}
+  const allProductsData_{{ safe_id }} = [
     {% if section.settings.collection %}
-      {% for product in section.settings.collection.products limit: 250 %}
-        {
-          id: "{{ product.id }}",
-          title: "{{ product.title | escape }}",
-          handle: "{{ product.handle }}",
-          price: {{ product.price | divided_by: 100.0 }},
-          image: "{{ product.featured_image | image_url: width: 300 }}",
-          type: "{{ product.type | escape }}",
-          vendor: "{{ product.vendor | escape }}",
-          url: "{{ product.url }}"
-        }{% unless forloop.last %},{% endunless %}
-      {% endfor %}
+      {% paginate section.settings.collection.products by 250 %}
+        {% for product in section.settings.collection.products %}
+          {
+            id: "{{ product.id }}",
+            title: "{{ product.title | escape }}",
+            handle: "{{ product.handle }}",
+            price: {{ product.price | divided_by: 100.0 }},
+            image: "{{ product.featured_image | image_url: width: 300 }}",
+            type: "{{ product.type | strip | escape }}",
+            vendor: "{{ product.vendor | escape }}",
+            url: "{{ product.url }}"
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      {% endpaginate %}
     {% else %}
-      {% for product in shop.products limit: 250 %}
-        {
-          id: "{{ product.id }}",
-          title: "{{ product.title | escape }}",
-          handle: "{{ product.handle }}",
-          price: {{ product.price | divided_by: 100.0 }},
-          image: "{{ product.featured_image | image_url: width: 300 }}",
-          type: "{{ product.type | escape }}",
-          vendor: "{{ product.vendor | escape }}",
-          url: "{{ product.url }}"
-        }{% unless forloop.last %},{% endunless %}
-      {% endfor %}
+      {% paginate shop.products by 250 %}
+        {% for product in shop.products %}
+          {
+            id: "{{ product.id }}",
+            title: "{{ product.title | escape }}",
+            handle: "{{ product.handle }}",
+            price: {{ product.price | divided_by: 100.0 }},
+            image: "{{ product.featured_image | image_url: width: 300 }}",
+            type: "{{ product.type | strip | escape }}",
+            vendor: "{{ product.vendor | escape }}",
+            url: "{{ product.url }}"
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      {% endpaginate %}
     {% endif %}
   ];
   
-  console.log('=== PRODUCT DATA DEBUG ===');
-  console.log('Total products:', allProductsData.length);
-  console.log('Product types found:', [...new Set(allProductsData.map(p => p.type))]);
-  allProductsData.forEach((p, i) => {
-    console.log(`Product ${i}: "${p.title}" - Type: "${p.type}"`);
-  });
+  console.log('=== PRODUCT DATA DEBUG ({{ section.id }}) ===');
+  console.log('Total products:', allProductsData_{{ safe_id }}.length);
+  console.log('Product types found:', [...new Set(allProductsData_{{ safe_id }}.map(p => p.type))]);
 </script>
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -66,71 +69,100 @@
   <!-- PRODUCT FILTER COMPONENT - TOP LEVEL -->
   <script src="{{ 'product-filter.js' | asset_url }}"></script>
   <product-filter 
-    id="product-filter"
+    id="product-filter-{{ section.id }}"
   ></product-filter>
 
   <!-- Pass data to filter after it loads -->
   <script>
     // Wait for both the filter component and allProductsData to be available
-    function initializeFilter() {
-      const productFilter = document.getElementById('product-filter');
-      if (productFilter && typeof allProductsData !== 'undefined' && allProductsData.length > 0) {
-        productFilter.setAttribute('data-products', JSON.stringify(allProductsData));
-        console.log('✅ Filter initialized with ' + allProductsData.length + ' products');
+    function initializeFilter_{{ safe_id }}() {
+      const productFilter = document.getElementById('product-filter-{{ section.id }}');
+      if (productFilter && typeof allProductsData_{{ safe_id }} !== 'undefined' && allProductsData_{{ safe_id }}.length > 0) {
+        productFilter.setAttribute('data-products', JSON.stringify(allProductsData_{{ safe_id }}));
+        console.log('✅ Filter initialized ({{ section.id }}) with ' + allProductsData_{{ safe_id }}.length + ' products');
       } else if (productFilter) {
         // Retry if data not ready yet
-        setTimeout(initializeFilter, 100);
+        setTimeout(initializeFilter_{{ safe_id }}, 100);
       }
     }
     
     // Start initialization after DOM is ready
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeFilter);
+      document.addEventListener('DOMContentLoaded', initializeFilter_{{ safe_id }});
     } else {
-      initializeFilter();
+      initializeFilter_{{ safe_id }}();
     }
   </script>
 
   <!-- FILTERED PRODUCTS DISPLAY CONTAINER -->
-  <div id="filtered-products-container" class="resource-list-wrapper">
-    <!-- Products grid -->
-    <div id="products-grid" class="products-grid-container">
-      {% if section.settings.collection %}
-        {% for product in section.settings.collection.products limit: section.settings.max_products %}
-          <div
-            class="resource-list__item product-card-wrapper"
-            data-product-id="{{ product.id }}"
-            data-product-type="{{ product.type | escape }}"
-            data-product-price="{{ product.price | divided_by: 100.0 }}"
-          >
-            <a href="{{ product.url }}" class="product-card-link" style="text-decoration: none; color: inherit;">
-              <div class="product-image-container">
-                {% if product.featured_image %}
-                  <img 
-                    src="{{ product.featured_image | image_url: width: 300 }}"
-                    alt="{{ product.featured_image.alt | escape }}"
-                    class="product-image"
-                    loading="lazy"
-                  >
-                {% endif %}
-              </div>
-              <div class="product-info">
-                <h3 class="product-title">{{ product.title }}</h3>
-                <div class="product-type">{{ product.type }}</div>
-                <div class="product-price">${{ product.price | divided_by: 100.0 }}</div>
-              </div>
-            </a>
-          </div>
-        {% endfor %}
+  <div id="filtered-products-container-{{ section.id }}" class="resource-list-wrapper">
+    <!-- Products grid - make it unique -->
+    <div id="products-grid-{{ section.id }}" class="products-grid-container">
+      {% if section.settings.collection != blank %}
+        {% paginate section.settings.collection.products by 250 %}
+          {% for product in section.settings.collection.products %}
+            <div
+              class="resource-list__item product-card-wrapper"
+              data-product-id="{{ product.id }}"
+              data-product-type="{{ product.type | strip | escape }}"
+              data-product-title="{{ product.title | escape | downcase }}"
+              data-product-price="{{ product.price | divided_by: 100.0 }}"
+            >
+              <a href="{{ product.url }}" class="product-card-link" style="text-decoration: none; color: inherit;">
+                <div class="product-image-container">
+                  {% if product.featured_image %}
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 300 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="product-image"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">{{ product.title }}</h3>
+                  <div class="product-type">{{ product.type }}</div>
+                  <div class="product-price">${{ product.price | divided_by: 100.0 }}</div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endpaginate %}
       {% else %}
-        <div style="padding: 20px; text-align: center; color: #999;">
-          <p>Please select a collection to display products.</p>
-        </div>
+        {% paginate shop.products by 250 %}
+          {% for product in shop.products %}
+            <div
+              class="resource-list__item product-card-wrapper"
+              data-product-id="{{ product.id }}"
+              data-product-type="{{ product.type | strip | escape }}"
+              data-product-title="{{ product.title | escape | downcase }}"
+              data-product-price="{{ product.price | divided_by: 100.0 }}"
+            >
+              <a href="{{ product.url }}" class="product-card-link" style="text-decoration: none; color: inherit;">
+                <div class="product-image-container">
+                  {% if product.featured_image %}
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 300 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="product-image"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                </div>
+                <div class="product-info">
+                  <h3 class="product-title">{{ product.title }}</h3>
+                  <div class="product-type">{{ product.type }}</div>
+                  <div class="product-price">${{ product.price | divided_by: 100.0 }}</div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endpaginate %}
       {% endif %}
     </div>
 
-    <!-- No results message -->
-    <div id="no-results-message" style="display: none; text-align: center; padding: 40px 20px; color: #999;">
+    <!-- No results message - make it unique -->
+    <div id="no-results-message-{{ section.id }}" style="display: none; text-align: center; padding: 40px 20px; color: #999;">
       <p>No products match your filters. Please try adjusting your selections.</p>
     </div>
   </div>
@@ -139,153 +171,300 @@
   <style>
     .products-grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
       margin-top: 30px;
     }
 
     .product-card-wrapper {
-      border: 1px solid #eee;
-      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #eaeaea;
+      border-radius: 12px;
       overflow: hidden;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
     }
 
     .product-card-wrapper:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+      border-color: transparent;
+      transform: translateY(-5px);
     }
 
     .product-card-link {
-      display: block;
+      display: flex;
+      flex-direction: column;
       height: 100%;
     }
 
     .product-image-container {
       width: 100%;
-      height: 250px;
+      height: 280px;
       overflow: hidden;
-      background: #f5f5f5;
+      background: #f9f9f9;
+      position: relative;
     }
 
     .product-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.6s ease;
     }
 
     .product-card-wrapper:hover .product-image {
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
 
     .product-info {
-      padding: 15px;
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-title {
       margin: 0 0 8px 0;
       font-size: 16px;
       font-weight: 600;
-      color: #333;
+      color: #111;
       line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .product-type {
-      font-size: 12px;
-      color: #999;
-      margin-bottom: 10px;
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 12px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
     }
 
     .product-price {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 700;
       color: #000;
+      margin-top: auto;
     }
 
     @media (max-width: 768px) {
       .products-grid-container {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 12px;
       }
 
       .product-image-container {
-        height: 180px;
+        height: 200px;
       }
 
+      .product-info {
+        padding: 12px;
+      }
+      
       .product-title {
         font-size: 14px;
       }
     }
+
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .pagination-btn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #e0e0e0;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      font-size: 18px;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      border-color: #eee;
+    }
+
+    .pagination-btn:not(:disabled):hover {
+      border-color: #000;
+      background: #000;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .pagination-info {
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+      min-width: 100px;
+      text-align: center;
+    }
   </style>
+  
+  <div class="pagination-container" id="pagination-container-{{ section.id }}" style="display: none;">
+    <button class="pagination-btn" id="prev-btn-{{ section.id }}" aria-label="Previous Page">←</button>
+    <span class="pagination-info" id="pagination-info-{{ section.id }}">Page 1 of 1</span>
+    <button class="pagination-btn" id="next-btn-{{ section.id }}" aria-label="Next Page">→</button>
+  </div>
 
   <!-- Filter Event Handlers -->
   <script>
-    function setupFilterListeners() {
-      const productFilter = document.getElementById('product-filter');
-      const noResultsMessage = document.getElementById('no-results-message');
+    function setupFilterListeners_{{ safe_id }}() {
+      const productFilter = document.getElementById('product-filter-{{ section.id }}');
+      const noResultsMessage = document.getElementById('no-results-message-{{ section.id }}');
+      const paginationContainer = document.getElementById('pagination-container-{{ section.id }}');
+      const prevBtn = document.getElementById('prev-btn-{{ section.id }}');
+      const nextBtn = document.getElementById('next-btn-{{ section.id }}');
+      const paginationInfo = document.getElementById('pagination-info-{{ section.id }}');
 
       if (!productFilter) {
-        console.error('❌ Product filter not found');
+        console.error('❌ Product filter not found for section: {{ section.id }}');
         return;
       }
 
-      console.log('✅ Product filter found, setting up listeners');
+      console.log('✅ Setting up filter listeners for section: {{ section.id }}');
 
-      productFilter.addEventListener('filter-applied', function(event) {
-        const filters = event.detail;
-        console.log('🔍 Filter applied event received:', filters);
+      // State
+      let allCards = [];
+      let visibleCards = [];
+      let currentPage = 1;
+      const itemsPerPage = 12;
 
-        // Get all product cards
-        const productCards = document.querySelectorAll('.product-card-wrapper');
-        console.log('Total product cards found:', productCards.length);
+      // Initialize - get cards for THIS section only
+      allCards = Array.from(document.querySelectorAll('#products-grid-{{ section.id }} .product-card-wrapper'));
+      
+      // Function to render current page
+      function renderPage() {
+        const totalPages = Math.ceil(visibleCards.length / itemsPerPage);
         
-        let visibleCount = 0;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
 
-        productCards.forEach((card, index) => {
-          const productType = card.getAttribute('data-product-type') || '';
-          console.log('Card ' + index + ' type: "' + productType + '"');
-          
-          let shouldShow = true;
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
 
-          // Filter by category (type) only
-          if (filters.categories && filters.categories.length > 0) {
-            shouldShow = filters.categories.includes(productType);
-            console.log('  Checking if "' + productType + '" in', filters.categories, '=', shouldShow);
-          }
+        // Hide all first
+        allCards.forEach(card => card.style.display = 'none');
 
-          // Show or hide the product
-          card.style.display = shouldShow ? 'block' : 'none';
-          if (shouldShow) visibleCount++;
+        // Show only current page items from visible set
+        visibleCards.slice(startIndex, endIndex).forEach(card => {
+          card.style.display = 'flex';
+          card.style.animation = 'fadeIn 0.5s ease forwards';
         });
 
-        // Show/hide no results message
-        if (visibleCount === 0) {
-          noResultsMessage.style.display = 'block';
-        } else {
-          noResultsMessage.style.display = 'none';
+        // Update UI
+        if (productFilter.updateCount) {
+          productFilter.updateCount(visibleCards.length);
         }
 
-        console.log('✅ Showing ' + visibleCount + ' of ' + productCards.length + ' products');
+        // Pagination UI
+        if (visibleCards.length > itemsPerPage) {
+          paginationContainer.style.display = 'flex';
+          paginationInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+          prevBtn.disabled = currentPage === 1;
+          nextBtn.disabled = currentPage === totalPages;
+        } else {
+          paginationContainer.style.display = 'none';
+        }
+
+        // No Results
+        noResultsMessage.style.display = visibleCards.length === 0 ? 'block' : 'none';
+      }
+
+      // Filter Logic
+      function applyFilter(filters) {
+        visibleCards = allCards.filter(card => {
+          const productType = card.getAttribute('data-product-type') || '';
+          const productTitle = card.getAttribute('data-product-title') || '';
+          const productPrice = parseFloat(card.getAttribute('data-product-price')) || 0;
+          
+          let matchesCategory = true;
+          let matchesSearch = true;
+          let matchesPrice = true;
+
+          if (filters.categories && filters.categories.length > 0) {
+            matchesCategory = filters.categories.includes(productType);
+          }
+
+          if (filters.search && filters.search.length > 0) {
+            matchesSearch = productTitle.includes(filters.search.toLowerCase());
+          }
+
+          if (filters.priceMin !== undefined && filters.priceMax !== undefined) {
+             matchesPrice = productPrice >= filters.priceMin && productPrice <= filters.priceMax;
+          }
+
+          return matchesCategory && matchesSearch && matchesPrice;
+        });
+
+        currentPage = 1;
+        renderPage();
+      }
+
+      // Listeners
+      productFilter.addEventListener('filter-applied', (e) => {
+        console.log('🔍 Filter applied for section {{ section.id }}:', e.detail);
+        applyFilter(e.detail);
+      });
+      
+      productFilter.addEventListener('filter-reset', () => {
+        console.log('🔄 Filter reset for section {{ section.id }}');
+        visibleCards = [...allCards];
+        currentPage = 1;
+        renderPage();
       });
 
-      productFilter.addEventListener('filter-reset', function(event) {
-        console.log('🔄 Filter reset event received');
-        const productCards = document.querySelectorAll('.product-card-wrapper');
-        productCards.forEach(card => {
-          card.style.display = 'block';
-        });
-        noResultsMessage.style.display = 'none';
-        console.log('✅ All products shown');
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPage();
+        }
       });
+
+      nextBtn.addEventListener('click', () => {
+        const totalPages = Math.ceil(visibleCards.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderPage();
+        }
+      });
+
+      // Initial Render
+      visibleCards = [...allCards];
+      renderPage();
     }
 
-    // Try to setup immediately and with delay
-    setupFilterListeners();
-    setTimeout(setupFilterListeners, 500);
-    document.addEventListener('DOMContentLoaded', setupFilterListeners);
+    // Try to setup/run
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupFilterListeners_{{ safe_id }});
+    } else {
+      setupFilterListeners_{{ safe_id }}();
+    }
   </script>
+
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
 
   <div
     class="section-resource-list__content"
