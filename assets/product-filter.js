@@ -39,7 +39,7 @@ filterTemplate.innerHTML = /*html*/`
     color: #1a1a1a;
     margin: 0;
   }
-  
+ 
   .product-count {
     font-size: 13px;
     color: #666;
@@ -226,7 +226,7 @@ filterTemplate.innerHTML = /*html*/`
       flex-direction: column;
       align-items: stretch;
     }
-    
+   
     .search-box {
       max-width: 100%;
     }
@@ -239,7 +239,7 @@ filterTemplate.innerHTML = /*html*/`
       <h3 class="filter-title">Filter Products</h3>
       <span class="product-count" id="product-count-display"></span>
     </div>
-    
+   
     <div class="search-box">
       <input type="text" class="search-input" id="search-input" placeholder="Search products...">
       <span class="search-icon">🔍</span>
