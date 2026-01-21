@@ -173,9 +173,9 @@
       "name": "Featured collection",
       "settings": {
         "collection": "all-products",
-        "max_products": 1,
+        "max_products": 17,
         "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
+        "horizontal_alignment": "center",
         "gap": 28,
         "color_scheme": "scheme-1",
         "padding-block-start": 48,
