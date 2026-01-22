@@ -333,6 +333,7 @@
     },
     "product_list_93UiKb": {
       "type": "product-list",
+      "disabled": true,
       "name": "t:names.products_grid",
       "settings": {
         "collection": "all-products",
