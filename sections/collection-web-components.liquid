@@ -3,13 +3,16 @@
   rel="stylesheet" />
 <script type="module" src="https://cdn.shopify.com/storefront/web-components.js"></script>
 <!-- Provide the token and set the market context -->
-<shopify-store store-domain="ct-ahnaf.myshopify.com" country="US" language="en"></shopify-store>
+ 
+<shopify-store store-domain="{{ shop.permanent_domain }}" country="US" language="en">
+
+</shopify-store>
 
 <!-- Navigation -->
 <div class="navigation-layout">
   <div class="navigation">
     <div class="navigation__title">
-      <span class="navigation__title-bold">MOCK<span class="navigation__title-light">SHOP</span></span>
+      <span class="navigation__title-bold">{{ shop.name }}<span class="navigation__title-light"></span></span>
     </div>
     <a onclick="document.querySelector('shopify-cart').showModal()">
       <div class="navigation__view-cart">
@@ -21,10 +24,10 @@
   </div>
 </div>
 
-<!-- Collection hero -->
+<!-- Collection Hero -->
 <div class="hero-layout">
   <div class="hero">
-    <shopify-context type="collection" handle="accessories">
+    <shopify-context type="collection" handle="{{collection.handle}}">
       <template>
         <h1><shopify-data query="collection.title"></shopify-data></h1>
         <h2>Enhance Your Style with Our Curated Collection</h2>
@@ -34,7 +37,7 @@
 </div>
 
 <!-- Set collection you want to display -->
-<shopify-context type="collection" handle="accessories">
+<shopify-context type="collection" handle="{{collection.handle}}">
   <template>
     <div class="collection-layout">
       <div class="collection-grid">
@@ -235,7 +238,7 @@
   /** Hero style **/
   .hero-layout {
     align-items: center;
-    background-image: url('hero-image.avif');
+    background-image: url('{{ collection.image | image_url: width: 1200 }}');
     background-position: center;
     background-size: cover;
     color: #ffffff;
@@ -660,10 +663,3 @@
     margin: 0;
   }
 </style>
-
-{% schema %}
-{
-  "name": "Collection Web Components",
-  "settings": []
-}
-{% endschema %}
