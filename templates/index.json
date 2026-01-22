@@ -132,52 +132,6 @@
         "padding-block-end": 48
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
-      "disabled": true,
-      "name": "Featured collection",
-      "settings": {
-        "collection": "all-products",
-        "max_products": 17,
-        "section_width": "page-width",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "ct_image_with_text_DhAhr9": {
-      "type": "CT-Image-with-text",
-      "name": "CT Image with Text",
-      "settings": {
-        "layout": "text_first",
-        "image": "shopify://shop_images/3rd-grid.png",
-        "heading": "Hey This is a section made by AI",
-        "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post.</p>",
-        "button_label": "Visit for more",
-        "button_link": "shopify://pages/about-us",
-        "button_alignment": "left",
-        "button_bg_color": "#dc2a2a",
-        "button_text_color": "#ffffff",
-        "bg_color": "#ffffff",
-        "text_color": "#000000",
-        "heading_font": "work_sans_n6",
-        "heading_size": 40,
-        "text_font": "work_sans_n4",
-        "text_size": 16
-      }
-    },
-    "product_list_93UiKb": {
-      "type": "product-list",
-      "name": "t:names.products_grid",
-      "settings": {
-        "collection": "all-products",
-        "max_products": 1,
-        "section_width": "page-width",
-        "gap": 12,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
     "collection_list_jdBL9W": {
       "type": "collection-list",
       "blocks": {
@@ -342,14 +296,60 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "product_list_fa6P9H": {
+      "type": "product-list",
+      "disabled": true,
+      "name": "Featured collection",
+      "settings": {
+        "collection": "all-products",
+        "max_products": 17,
+        "section_width": "page-width",
+        "gap": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "ct_image_with_text_DhAhr9": {
+      "type": "CT-Image-with-text",
+      "name": "CT Image with Text",
+      "settings": {
+        "layout": "text_first",
+        "image": "shopify://shop_images/3rd-grid.png",
+        "heading": "Hey This is a section made by AI",
+        "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post.</p>",
+        "button_label": "Visit for more",
+        "button_link": "shopify://pages/about-us",
+        "button_alignment": "left",
+        "button_bg_color": "#dc2a2a",
+        "button_text_color": "#ffffff",
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "heading_font": "work_sans_n6",
+        "heading_size": 40,
+        "text_font": "work_sans_n4",
+        "text_size": 16
+      }
+    },
+    "product_list_93UiKb": {
+      "type": "product-list",
+      "name": "t:names.products_grid",
+      "settings": {
+        "collection": "all-products",
+        "max_products": 1,
+        "section_width": "page-width",
+        "gap": 12,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
     "product_list_afdWK3",
+    "collection_list_jdBL9W",
     "product_list_fa6P9H",
     "ct_image_with_text_DhAhr9",
-    "product_list_93UiKb",
-    "collection_list_jdBL9W"
+    "product_list_93UiKb"
   ]
 }
